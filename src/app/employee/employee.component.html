@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col">
+    <div class="card-columns mt-3">
+      <div class="card" style="background-color: rgba(36, 172, 226, 0.322);">
+        <div class="card-body">
+          <h5 class="card-title">Ongoing Tasks</h5>
+          <table class="table">
+            <tbody *ngIf="otasks">
+              <tr
+                tr
+                class="clickable"
+                (click)="showModalDialog(i)"
+                *ngFor="let task of otasks; let i = index"
+              >
+                <td>{{ task.title }}</td>
+                <td>{{ task.deadline | date: "d MMM, h:mm a" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="background-color : rgba(91, 236, 91, 0.432);">
+        <div class="card-body">
+          <h5 class="card-title">Completed Tasks</h5>
+          <table class="table">
+            <tbody *ngIf="ctasks">
+              <tr
+                tr
+                class="clickable"
+                (click)="showModalDialog(i)"
+                *ngFor="let task of ctasks; let i = index"
+              >
+                <td>{{ task.title }}</td>
+                <td>{{ task.deadline | date: "d MMM, h:mm a" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="background-color: rgba(255, 51, 51, 0.404);">
+        <div class="card-body">
+          <h5 class="card-title">Late Tasks</h5>
+          <table class="table">
+            <tbody *ngIf="ltasks">
+              <tr
+                tr
+                class="clickable"
+                (click)="showModalDialog(i)"
+                *ngFor="let task of ltasks; let i = index"
+              >
+                <td>{{ task.title }}</td>
+                <td>{{ task.deadline | date: "d MMM, h:mm a" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedTask">
+  <p-dialog
+    header="Submit progress : {{ selectedTask.title }}"
+    [(visible)]="displayModal"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div>
+      <span class="font-weight-bold"> Assigned by : </span>&nbsp;
+      {{ selectedTask.managerName }}
+    </div>
+    <div>
+      <span class="font-weight-bold mt-2"> Deadline : </span> &nbsp;
+      {{ selectedTask.deadline | date: "d MMM, h:mm a" }}
+    </div>
+    <form [formGroup]="taskReportForm" (ngSubmit)="submitTaskProgress()">
+      <div class="mt-2">Progress notes :</div>
+      <textarea
+        formControlName="note"
+        placeholder="Enter your progress details"
+        class="form-control mt-2"
+        id="exampleFormControlTextarea1"
+        rows="3"
+      ></textarea>
+      <div class="font-weight-bold mt-2">
+        Estimated completion of task in %: {{ val2 }}
+      </div>
+    </form>
+    <input type="text" pInputText [(ngModel)]="val2" readonly />
+    <p-slider [(ngModel)]="val2"></p-slider>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-check"
+        (click)="submitTaskProgress()"
+        label="Submit Progress"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</div>

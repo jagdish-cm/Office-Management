@@ -1,0 +1,208 @@
+<div *ngIf="!editTask" class="container-fluid">
+  <h3>Create Task :</h3>
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="createTaskForm" (ngSubmit)="createTask()">
+        <div class="mt-1 row">
+          <h6 class="col-1  py-2">Title :</h6>
+          <div class="col-11">
+            <input
+              type="text"
+              class="w-100"
+              placeholder="Enter title of task"
+              pInputText
+              formControlName="title"
+            />
+            <span
+              *ngIf="
+                !createTaskForm.get('title').valid &&
+                createTaskForm.get('title').touched
+              "
+              style="color: rgb(194, 47, 47);"
+              >Title is required!</span
+            >
+          </div>
+        </div>
+
+        <div class="mt-3 row">
+          <h6 class="col-1 py-2">Deadline :</h6>
+          <div class="col-11">
+            <p-calendar
+              formControlName="deadline"
+              [showTime]="true"
+              placeholder="Last Date"
+              inputId="time"
+            ></p-calendar>
+            <span
+              *ngIf="
+                !createTaskForm.get('deadline').valid &&
+                createTaskForm.get('deadline').touched
+              "
+              style="color: rgb(194, 47, 47);"
+              >Specify a deadline!</span
+            >
+          </div>
+        </div>
+
+        <div class="mt-3 row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12"><h6>Add Employees on task :</h6></div>
+            </div>
+          </div>
+
+          <table class="table mx-3">
+            <thead>
+              <tr class="table-primary">
+                <th scope="col">Employee</th>
+                <th scope="col">Available</th>
+                <th scope="col">Select</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of employees">
+                <td>{{ emp.name }}</td>
+                <td>Yes</td>
+                <td>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [value]="emp._id"
+                    (change)="addEmployee($event)"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <span
+            *ngIf="
+              !createTaskForm.get('employees').valid &&
+              createTaskForm.get('employees').touched
+            "
+            style="color: rgb(194, 47, 47);"
+            >Select atleast one employee!</span
+          >
+
+          <button type="submit" class="mx-3 btn btn-success">
+            <i class="fas fa-check"></i> Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="editTask" class="container-fluid">
+  <h3>Edit Task :</h3>
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="createTaskForm" (ngSubmit)="createTask()">
+        <div class="mt-1 row">
+          <h6 class="col-1  py-2">Title :</h6>
+          <div class="col-11">
+            <input
+              type="text"
+              class="w-100"
+              placeholder="Enter title of task"
+              pInputText
+              formControlName="title"
+            />
+            <span
+              *ngIf="
+                !createTaskForm.get('title').valid &&
+                createTaskForm.get('title').touched
+              "
+              style="color: rgb(194, 47, 47);"
+              >Title is required!</span
+            >
+          </div>
+        </div>
+
+        <div class="mt-3 row">
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <div>
+                  <h6>Previous Deadline :</h6>
+                  <span>{{ editTask.deadline | date: "d MMM, h:mm a" }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col px-0">
+                <h6 class="col-2 pt-2">Deadline :</h6>
+                <div class="col-10">
+                  <p-calendar
+                    formControlName="deadline"
+                    [showTime]="true"
+                    placeholder="Specify a new deadline"
+                    inputId="time"
+                  ></p-calendar>
+                  <span
+                    *ngIf="
+                      !createTaskForm.get('deadline').valid &&
+                      createTaskForm.get('deadline').touched
+                    "
+                    style="color: rgb(194, 47, 47);"
+                    >Specify a deadline!</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col font-weight-bolder">
+            Assigned Employees :
+            <span *ngFor="let emp of editEmpNames">&nbsp;{{ emp }} |</span>
+          </div>
+        </div>
+
+        <div class="mt-3 row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12"><h6>Add Employees on task :</h6></div>
+            </div>
+          </div>
+
+          <table class="table mx-3">
+            <thead>
+              <tr class="table-primary">
+                <th scope="col">Employee</th>
+                <th scope="col">Available</th>
+                <th scope="col">Select</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of employees">
+                <td>{{ emp.name }}</td>
+                <td>Yes</td>
+                <td>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [value]="emp._id"
+                    (change)="addEmployee($event)"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <span
+            *ngIf="
+              !createTaskForm.get('employees').valid &&
+              createTaskForm.get('employees').touched
+            "
+            style="color: rgb(194, 47, 47);"
+            >Select atleast one employee!</span
+          >
+
+          <button type="submit" class="mx-3 btn btn-success">
+            <i class="fas fa-check"></i> Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

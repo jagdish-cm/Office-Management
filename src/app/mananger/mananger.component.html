@@ -1,0 +1,94 @@
+<button
+  (click)="createTask()"
+  type="button"
+  class="w-100 btn btn-outline-primary"
+>
+  <i class="fas fa-plus"></i> &nbsp; Create New Task
+</button>
+
+<div class="card-columns mt-3">
+  <div class="card" style="background-color: rgba(36, 172, 226, 0.322);">
+    <div class="card-body">
+      <h5 class="card-title">Ongoing Tasks</h5>
+      <table class="table">
+        <tbody *ngIf="otasks">
+          <tr
+            tr
+            class="clickable"
+            (click)="showModalDialog(task)"
+            *ngFor="let task of otasks; let i = ind; ex"
+          >
+            <td>{{ task.title }}</td>
+            <td>{{ task.deadline | date: "d MMM, h:mm a" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card" style="background-color : rgba(91, 236, 91, 0.432);">
+    <div class="card-body">
+      <h5 class="card-title">Completed Tasks</h5>
+      <table class="table">
+        <tbody *ngIf="ctasks">
+          <tr
+            tr
+            class="clickable"
+            (click)="showModalDialog(task)"
+            *ngFor="let task of ctasks; let i = index"
+          >
+            <td>{{ task.title }}</td>
+            <td>{{ task.deadline | date: "d MMM, h:mm a" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card" style="background-color: rgba(255, 51, 51, 0.404);">
+    <div class="card-body">
+      <h5 class="card-title">Late Tasks</h5>
+      <table class="table">
+        <tbody *ngIf="ltasks">
+          <tr
+            tr
+            class="clickable"
+            (click)="showModalDialog(task)"
+            *ngFor="let task of ltasks; let i = index"
+          >
+            <td>{{ task.title }}</td>
+            <td>{{ task.deadline | date: "d MMM, h:mm a" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedTask">
+  <p-dialog
+    header="Details : {{ selectedTask.title }}"
+    [(visible)]="displayModal"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [baseZIndex]="10000"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="mb-2">
+      <span class="font-weight-bold mt-2">Deadline : </span> &nbsp;
+      {{ selectedTask.deadline | date: "d MMM, h:mm a" }}
+    </div>
+    <div class="mb-2" *ngFor="let prog of selectedTaskProgress">
+      <span class="font-weight-bold mt-2">{{ prog.name }} : </span> &nbsp;
+      {{ prog.note }}
+      <p-progressBar value="{{ prog.progress }}"></p-progressBar>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-pencil"
+        (click)="editTask()"
+        label="Edit Task"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</div>

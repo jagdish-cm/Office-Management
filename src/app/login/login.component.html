@@ -1,0 +1,219 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-5 mr-2">
+      <h3>Login</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+        <label class="sr-only" for="email">Username</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-at"></i></div>
+          </div>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+          />
+        </div>
+        <span
+          *ngIf="
+            !loginForm.get('email').valid && loginForm.get('email').touched
+          "
+          style="color: rgb(194, 47, 47);"
+          >Please enter valid email</span
+        >
+        <div class="input-group mt-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-key"></i></div>
+          </div>
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+            id="password"
+            placeholder="Enter password"
+          />
+        </div>
+        <button
+          pButton
+          pRipple
+          type="submit"
+          label="Login"
+          class="mt-2 p-button-rounded p-button-success w-100"
+        ></button>
+      </form>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h3>Register</h3>
+
+      <span class="font-weight-bolder mr-4 mt-5" style="font-size:larger;"
+        >Post :
+      </span>
+      <span class="p-field-radiobutton">
+        <p-radioButton
+          name="post"
+          value="employee"
+          [(ngModel)]="post"
+          inputId="employee"
+          class="mb-2 mr-3"
+        ></p-radioButton>
+        <label for="employee" class="mr-5">Employee</label>
+      </span>
+      <span class="p-field-radiobutton">
+        <p-radioButton
+          name="post"
+          value="manager"
+          [(ngModel)]="post"
+          class="mb-2 mr-3"
+          inputId="manager"
+        ></p-radioButton>
+        <label for="manager">Manager</label>
+      </span>
+      <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
+        <span
+          *ngIf="
+            !registerForm.get('post').valid && registerForm.get('post').touched
+          "
+          style="color: rgb(194, 47, 47);"
+          >Please specify your post!</span
+        >
+
+        <div class="form-group row">
+          <label for="name" class="mt-3 col-sm-2 col-form-label">Name : </label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              formControlName="name"
+              class="mt-3 form-control"
+              id="name"
+              placeholder="Enter your name"
+            />
+            <span
+              *ngIf="
+                !registerForm.get('name').valid &&
+                registerForm.get('name').touched
+              "
+              style="color: rgb(194, 47, 47);"
+              >Please enter your name!</span
+            >
+          </div>
+          <label for="email" class="mt-3 col-sm-2 col-form-label"
+            >Email :
+          </label>
+          <div class="col-sm-10">
+            <input
+              type="email"
+              formControlName="email"
+              class="mt-3 form-control"
+              id="email"
+              placeholder="Enter email"
+            />
+            <span
+              *ngIf="
+                !registerForm.get('email').valid &&
+                registerForm.get('email').touched
+              "
+              style="color: rgb(194, 47, 47);"
+              >Please enter your email!</span
+            >
+          </div>
+
+          <label for="inputPassword" class="mt-3 col-sm-2 col-form-label"
+            >Password
+          </label>
+          <div class="col-sm-10">
+            <input
+              formControlName="password"
+              type="password"
+              class="mt-3 form-control"
+              id="inputPassword"
+              placeholder="Password"
+            />
+            <span
+              *ngIf="
+                !registerForm.get('password').valid &&
+                registerForm.get('password').touched
+              "
+              style="color: rgb(194, 47, 47);"
+              >Minimum length of password is 6 characters!</span
+            >
+          </div>
+
+          <label for="confirmPassword" class="mt-3 col-sm-2 col-form-label"
+            >Confirm :
+          </label>
+          <div class="col-sm-10">
+            <input
+              formControlName="confirmPassword"
+              type="password"
+              class="mt-3 form-control"
+              id="confirmPassword"
+              placeholder="Re-enter Password"
+            />
+            <span
+              *ngIf="
+                registerForm.get('confirmPassword').hasError('required') &&
+                registerForm.get('confirmPassword').touched
+              "
+              style="color: rgb(194, 47, 47);"
+              >Confirmation password is required!</span
+            >
+            <span
+              *ngIf="
+                registerForm.get('confirmPassword').hasError('confirm') &&
+                registerForm.get('confirmPassword').touched
+              "
+              style="color: rgb(194, 47, 47);"
+              >Passwords did not match!</span
+            >
+          </div>
+
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Sign Up"
+            class="mt-3 mx-3 w-100 p-button-rounded"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <h4>Dummy login :</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Post</th>
+            <th scope="col">Email</th>
+            <th scope="col">Passoword</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Manager</td>
+            <td>jagdishcm41297@gmail.com</td>
+            <td>111111</td>
+          </tr>
+          <tr>
+            <td>Employee</td>
+            <td>tushar@gmail.com</td>
+            <td>111111</td>
+          </tr>
+          <tr>
+            <td>Employee</td>
+            <td>hsr@gmail.com</td>
+            <td>111111</td>
+          </tr>
+          <tr>
+            <td>Employee</td>
+            <td>dhruv@gmail.com</td>
+            <td>111111</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
